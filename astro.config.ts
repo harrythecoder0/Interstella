@@ -80,7 +80,7 @@ export default defineConfig({
       // @ts-ignore
       viteStaticCopy({
         targets: [
-          {
+          {,{
             src: `${epoxyPath()}/**/*.mjs`.replace(/\\/g, "/"), // Fixed: epoxyPath() is a function
             dest: "assets/bundled",
             overwrite: false,
