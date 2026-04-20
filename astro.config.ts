@@ -72,9 +72,10 @@ export default defineConfig({
         configureServer(server) {
           server.httpServer?.on("upgrade", (req, socket, head) => (req.url?.startsWith("/f") ? wisp.routeRequest(req, socket, head) : undefined));
         },
-      },
+      // @ts-ignore
       viteStaticCopy({
         targets: [
+
           {
             src: `${epoxyPath}/**/*.mjs`.replace(/\\/g, "/"),
             dest: "assets/bundled",
