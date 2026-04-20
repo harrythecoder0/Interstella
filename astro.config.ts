@@ -4,7 +4,9 @@ import node from "@astrojs/node";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
+// @ts-ignore
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
+// @ts-ignore
 import { server as wisp } from "@mercuryworkshop/wisp-js/server";
 import compress from "@playform/compress";
 import { defineConfig } from "astro/config";
@@ -70,20 +72,22 @@ export default defineConfig({
       {
         name: "vite-wisp-server",
         configureServer(server) {
-          server.httpServer?.on("upgrade", (req, socket, head) => (req.url?.startsWith("/f") ? wisp.routeRequest(req, socket, head) : undefined));
+          server.httpServer?.on("upgrade", (req, socket, head) => 
+            (req.url?.startsWith("/f") ? wisp.routeRequest(req, socket, head) : undefined)
+          );
         },
+      }, // <-- Fixed: Added missing closing brace and comma
       // @ts-ignore
       viteStaticCopy({
         targets: [
-
           {
-            src: `${epoxyPath}/**/*.mjs`.replace(/\\/g, "/"),
+            src: `${epoxyPath()}/**/*.mjs`.replace(/\\/g, "/"), // Fixed: epoxyPath() is a function
             dest: "assets/bundled",
             overwrite: false,
             rename: (name) => `ex-${name}.mjs`,
           },
           {
-            src: `${baremuxPath}/**/*.js`.replace(/\\/g, "/"),
+            src: `${baremuxPath()}/**/*.js`.replace(/\\/g, "/"), // Fixed: baremuxPath() is a function
             dest: "assets/bundled",
             overwrite: false,
             rename: (name) => `bm-${name}.js`,
@@ -93,3 +97,5 @@ export default defineConfig({
     ],
   },
 });
+
+  
