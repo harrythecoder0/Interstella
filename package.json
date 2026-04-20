@@ -3,7 +3,7 @@
   "type": "module",
   "version": "7.0.0",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host 0.0.0.0",
     "start": "bun run index.ts",
     "build": "astro check && astro build",
     "preview": "astro preview",
